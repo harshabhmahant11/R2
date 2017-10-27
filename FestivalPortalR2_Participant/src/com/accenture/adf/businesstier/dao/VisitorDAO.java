@@ -217,7 +217,7 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 		//E3.EVENTCOORDINATORID = E4.EVENTCOORDINATORID  AND E2.VISITORID = 1001 AND E3.EVENTSESSIONID in 
 		//(SELECT EVENTSESSIONID FROM EVENTSESSIONSIGNUP) ORDER BY E1.EVENTID DESC
 		while(resultSet.next()){
-			Object[] eventObject = new Object[10];
+			Object[] eventObject = new Object[11];
 			eventObject[0] = resultSet.getInt("eventid");
 			eventObject[1] = resultSet.getString("name");
 			eventObject[2] = resultSet.getString("description");
@@ -228,6 +228,7 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 			eventObject[7] = resultSet.getString("lastname");
 			eventObject[8] = resultSet.getInt("EVENTSESSIONID");
 			eventObject[9] = resultSet.getInt("SIGNUPID");
+			eventObject[10] = visitor.getVisitorId();
 			
 			eventList.add(eventObject);
 			
@@ -380,20 +381,31 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 	public void unregisterEvent(Visitor visitor, int eventid, int eventsessionid)
 			throws ClassNotFoundException, SQLException, Exception {
 
+	
 		connection = FERSDataConnection.createConnection();
 		statement = connection.prepareStatement(query.getDeleteEventQuery());
 		statement.setInt(1,eventsessionid);
-		statement.setInt(2,eventid);
-		statement.setInt(3,visitor.getVisitorId());
+		statement.setInt(2,visitor.getVisitorId());
+		statement.setInt(3,eventid);
 		int status = statement.executeUpdate();
-		if(status<0){
+		if(status<=0){
 			log.error("No entry deleted.");
 		}
 		// TODO:  Add code here.....
         // TODO:  Pseudo-code are in the block comments above this method.
         // TODO:  For more comprehensive pseudo-code with details, 
 		//        refer to the Component/Class Detail Design Document
-
+//
+//		connection = FERSDataConnection.createConnection();
+//		statement = connection.prepareStatement(query.getDeleteEventQuery());
+//		statement.setInt(1, eventid);
+//		statement.setInt(2,visitor.getVisitorId());
+//		statement.setInt(3,eventsessionid);
+//		int status=statement.executeUpdate();
+//		if (status <= 0)
+//			throw new FERSGenericException("Records not Present", new Exception());
+//		log.info("unregistering event in Database for the visitor :" + visitor.getFirstName());
+//		FERSDataConnection.closeConnection();
 	
 		FERSDataConnection.closeConnection();
 	}
