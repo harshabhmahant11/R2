@@ -153,7 +153,7 @@ public class TestVisitorDAO {
 			
 			try {
 				
-				vDao.registerVisitorToEvent(visitor, 10001,1001);
+				vDao.registerVisitorToEvent(visitor, 1001,10001);
 				String query = "Select count(*) from eventsessionsignup where visitorid=1003";
 				Connection c = FERSDataConnection.createConnection();
 				PreparedStatement s = c.prepareStatement(query);

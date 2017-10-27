@@ -170,7 +170,7 @@ public class TestEventDAO {
 		 * Assert the size of return type arraylist
 		 */		
 		EventDAO edao = new EventDAO();
-		System.out.println(edao.getEventCoordinator());
+		
 		assertEquals(edao.getEventCoordinator().size(),5);
 	}
 	
