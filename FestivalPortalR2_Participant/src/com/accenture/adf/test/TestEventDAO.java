@@ -160,13 +160,18 @@ public class TestEventDAO {
 	
 	/**
 	 * Junit test case for getEventCoordinator
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testGetEventCoordinator(){
+	public void testGetEventCoordinator() throws ClassNotFoundException, SQLException{
 		/**
 		 * @TODO: Call getEventCoordinator method
 		 * Assert the size of return type arraylist
 		 */		
+		EventDAO edao = new EventDAO();
+		System.out.println(edao.getEventCoordinator());
+		assertEquals(edao.getEventCoordinator().size(),5);
 	}
 	
 	/**
@@ -194,15 +199,29 @@ public class TestEventDAO {
 	
 	/**
 	 * Junit test case for updateEvent
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testUpdateEvent(){
+	public void testUpdateEvent() throws ClassNotFoundException, SQLException{
 		/**
 		 * @TODO: Fetch Event object by calling showAllEvents method
 		 * Update the values of event object
 		 * Call updateEvent method by passing this modified event as object
 		 * Assert the status of return type of updateEvent method
 		 */			
+		EventDAO edao =  new EventDAO();
+		Event event =  new Event();
+		event.setEventid(1006);
+		event.setDescription("My Event Desc");
+		event.setDuration("3000-5000");
+		event.setName("MyEvent");
+		event.setPlace("Bangalore");
+		event.setEventtype("Casual");
+		event.setSessionId(10008);
+		event.setSeatsavailable(100);
+		int status=edao.updateEvent(event);
+		assertTrue(status>0);
 	}
 	
 	/**
