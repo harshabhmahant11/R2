@@ -140,7 +140,7 @@ public class TestVisitorDAO {
 		Visitor visitor = new Visitor();
 		VisitorDAO vDao = new VisitorDAO();
 		try {
-			visitor=vDao.searchUser("jjones", "password");
+			visitor=vDao.searchUser("bsmith", "password");
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

@@ -1,6 +1,13 @@
 package com.accenture.adf.test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.sql.SQLException;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import junit.framework.Assert;
 
@@ -8,9 +15,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.accenture.adf.businesstier.dao.VisitorDAO;
 import com.accenture.adf.businesstier.entity.Event;
 import com.accenture.adf.businesstier.entity.Visitor;
 import com.accenture.adf.businesstier.service.VisitorServiceImpl;
+import com.accenture.adf.helper.FERSDataConnection;
 
 /**
  * Junit test class for VisitorServiceImpl
@@ -21,6 +30,7 @@ public class TestVisitorServiceImpl {
 	private List<Event> visitorList;	
 	private Visitor visitor;
 	private VisitorServiceImpl visitorServiceImpl;
+	private VisitorDAO visitorDAO;
 
 	/**
 	 * Set up the initial methods 
@@ -100,6 +110,25 @@ public class TestVisitorServiceImpl {
 		 * can be retrieved using searchVisitor method and then asserting the returned
 		 * type of updateVisitorDetails
 		 */		
+		visitorDAO = new VisitorDAO();
+		int status=0;
+		try {
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			
+			status = visitorServiceImpl.updateVisitorDetails(visitor);
+			
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(1, status);
+		
 	}
 
 	/**
@@ -112,6 +141,37 @@ public class TestVisitorServiceImpl {
 		 * retrieved using searchVisitor method and then asserting the returned type 
 		 * of unregisterEvent
 		 */		
+		visitorDAO = new VisitorDAO();
+		int status = 0;
+		
+		try {
+			Connection connection = FERSDataConnection.createConnection();
+			
+			
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			visitorServiceImpl.unregisterEvent(visitor, 1002, 10002);
+			
+			//Checking if the data is deleted or not
+			
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID=? AND VISITORID=? AND EVENTID =?");
+			statement.setInt(1,10002);
+			statement.setInt(2,visitor.getVisitorId());
+			statement.setInt(3,1002);
+			ResultSet resultSet = statement.executeQuery();
+			if(resultSet.next()){
+				status = 1;
+			}else
+				status = -1;
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(-1, status);
 	}
 
 }
