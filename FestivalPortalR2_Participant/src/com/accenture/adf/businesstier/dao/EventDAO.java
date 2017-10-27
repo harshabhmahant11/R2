@@ -496,7 +496,7 @@ public class EventDAO {
 		// TODO: Pseudo-code are in the block comments above this method.
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
-		
+		int estatus=0, sstatus=0;
 		connection = FERSDataConnection.createConnection();
 		int maxeventid,maxsessionid;
 		statement = connection.prepareStatement(query.getSelectMaxEventId());
@@ -523,7 +523,7 @@ public class EventDAO {
 		statement.setString(5, iEvent.getDuration());
 		statement.setString(6, iEvent.getEventtype());
 		
-		int status = statement.executeUpdate();
+	 estatus = statement.executeUpdate();
 		
 		int no_of_sessions = iEvent.getEventSession();
 		
@@ -537,11 +537,18 @@ public class EventDAO {
 		statement.setInt(2, iEvent.getEventCoordinatorId());
 		statement.setInt(3, maxeventid);;
 		statement.setInt(4, iEvent.getSeatsavailable());	
-		statement.executeUpdate();
+		sstatus= statement.executeUpdate();
 		}
 	
-		
-		return status;
+		if(estatus>0 && sstatus>0)
+		{
+			return estatus;
+		}
+		else
+		{
+			return -1;
+		}
+		//return status;
 	}	
 	
 
