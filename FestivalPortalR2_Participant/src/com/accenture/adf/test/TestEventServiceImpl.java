@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import com.accenture.adf.businesstier.entity.EventCoordinator;
 import com.accenture.adf.businesstier.entity.Visitor;
 import com.accenture.adf.businesstier.service.EventServiceImpl;
 import com.accenture.adf.exceptions.FERSGenericException;
+import com.accenture.adf.helper.FERSDataConnection;
 
 /**
  * Junit test case to test class EventServiceImpl
@@ -26,9 +30,13 @@ import com.accenture.adf.exceptions.FERSGenericException;
  */
 public class TestEventServiceImpl {
 
+	private static Connection connection = null;
+	private static PreparedStatement statement = null;
+	private static ResultSet resultSet = null;
 	private List<Object[]> eventList;
 	private Visitor visitor;
 	private EventServiceImpl eventServiceImpl;
+
 
 	/**
 	 * Set up the objects required before execution of every method
@@ -61,6 +69,10 @@ public class TestEventServiceImpl {
 		/**
 		 * @TODO: Call getAllEvents method and assert it for the size of returned array
 		 */	
+		eventList=eventServiceImpl.getAllEvents();
+		assertEquals(12,eventList.size());
+
+
 	}
 
 	/**
@@ -72,6 +84,16 @@ public class TestEventServiceImpl {
 		 * @TODO: Call checkEventsofVisitor and assert the returned type of this method
 		 * for appropriate return type
 		 */	
+		
+		Boolean flag=false;
+
+		visitor.setVisitorId(1003);
+
+		flag=eventServiceImpl.checkEventsofVisitor(visitor,1002,10002);
+
+		assertEquals(true,flag);
+
+
 	}
 
 	/**
@@ -82,6 +104,55 @@ public class TestEventServiceImpl {
 		/**
 		 * @TODO: Call updateEventDeletions and assert the return type of this method
 		 */	
+		try {
+
+			connection = FERSDataConnection.createConnection();
+
+			statement = connection.prepareStatement("SELECT SEATSAVAILABLE FROM EVENTSESSION WHERE EVENTSESSIONID = ? AND EVENTID = ?");
+
+			statement.setInt(1, 10002);
+
+			statement.setInt(2, 1002);
+
+			resultSet = statement.executeQuery();
+
+			resultSet.next();
+
+			int val1 = resultSet.getInt(1);
+			
+			eventServiceImpl.updateEventDeletions(1002,10002);
+
+			resultSet = statement.executeQuery();
+
+			resultSet.next();
+
+			int val2 = resultSet.getInt(1);
+		
+			assertEquals(true,((++val1)==val2));
+
+			
+
+	} catch (ClassNotFoundException e) {
+
+		// TODO Auto-generated catch block
+
+		e.printStackTrace();
+
+	} catch (SQLException e) {
+
+		// TODO Auto-generated catch block
+
+		e.printStackTrace();	
+
+	} catch (Exception e) {
+
+		// TODO Auto-generated catch block
+
+		e.printStackTrace();
+
+	}
+
+
 	}
 
 	/**

@@ -89,6 +89,7 @@ public class EventDAO {
 			eventList.add(eventObject);
 		}
 		resultSet.close();
+		
 		FERSDataConnection.closeConnection();
 		return eventList;
 	}
@@ -154,7 +155,6 @@ public class EventDAO {
 		while (resultSet.next()) {
 			status = resultSet.getInt(1);
 		}
-		System.out.println("status:"+status);
 		resultSet.close();
 		log.info("No of times visitor registered for Event :" + status);
 		FERSDataConnection.closeConnection();

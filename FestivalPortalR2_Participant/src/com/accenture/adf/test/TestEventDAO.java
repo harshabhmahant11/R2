@@ -135,6 +135,7 @@ public class TestEventDAO {
 			
 			int seats1 = resultSet.getInt(1);
 			
+			
 			dao.updateEventDeletions(10024, 10054);
 			
 			
