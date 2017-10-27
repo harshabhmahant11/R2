@@ -147,15 +147,23 @@ public class TestEventDAO {
 
 	/**
 	 * Positive test case for method checkEventsofVisitor
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testCheckEventsOfVisitor_Positive() {
+	public void testCheckEventsOfVisitor_Positive() throws ClassNotFoundException, SQLException {
 		/**
 		 * @TODO: Create visitor object by setting appropriate values
 		 * Call checkEventsofVisitor method by passing this visitor object and
 		 * valid eventId
 		 * Assert the value of return type 
 		 */	
+		EventDAO edao = new EventDAO();
+		Visitor visitor = new Visitor();
+		
+		visitor.setVisitorId(1003);
+		boolean status=edao.checkEventsofVisitor(visitor, 1002,10002);
+		assertEquals(status,true);
 	}
 	
 	/**

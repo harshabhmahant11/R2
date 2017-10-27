@@ -176,17 +176,21 @@ public class VisitorDAO {
 		statement.setInt(3,eventid);
 		resultSet= statement.executeQuery();
 		resultSet.next();
+		System.out.println(resultSet.getInt(1));
 		if(resultSet.getInt(1)<=0)
 		{
+		//VISITORID,EVENTSESSIONID,EVENTID
 		statement = connection.prepareStatement(query.getRegisterQuery());
 		statement.setInt(1,visitor.getVisitorId());
 		statement.setInt(2,sessionid);
 		statement.setInt(3,eventid);
 		int status=statement.executeUpdate();
+		System.out.println(status);
 		}
 		else
 		{
 			new FERSGenericException("USER IS ALREADY REGISTERED",new Exception());
+			
 		}
 
 	}

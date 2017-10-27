@@ -153,8 +153,8 @@ public class TestVisitorDAO {
 			
 			try {
 				
-				vDao.registerVisitorToEvent(visitor, 1001,10001);
-				String query = "Select count(*) from eventsessionsignup where visitorid=1003";
+				vDao.registerVisitorToEvent(visitor, 1002,10002);
+				String query = "SELECT COUNT(*) AS EVENTCOUNT FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID=10001 AND VISITORID=1003 AND EVENTID=1001";
 				Connection c = FERSDataConnection.createConnection();
 				PreparedStatement s = c.prepareStatement(query);
 				ResultSet rs=s.executeQuery();
@@ -162,7 +162,6 @@ public class TestVisitorDAO {
 				assertEquals(rs.getInt(1)==1,true);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				//System.out.println(e.getMessage());
 				new FERSGenericException("Unable to Register",new Exception());
 			}
 		}

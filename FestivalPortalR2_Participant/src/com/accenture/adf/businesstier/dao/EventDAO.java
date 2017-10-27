@@ -152,8 +152,9 @@ public class EventDAO {
 		resultSet = statement.executeQuery();
 		int status = 0;
 		while (resultSet.next()) {
-			status = resultSet.getInt("EVENTCOUNT");
+			status = resultSet.getInt(1);
 		}
+		System.out.println("status:"+status);
 		resultSet.close();
 		log.info("No of times visitor registered for Event :" + status);
 		FERSDataConnection.closeConnection();
