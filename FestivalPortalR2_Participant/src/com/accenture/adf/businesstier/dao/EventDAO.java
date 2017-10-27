@@ -496,7 +496,7 @@ public class EventDAO {
 		// TODO: Pseudo-code are in the block comments above this method.
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
-		
+		int estatus=0, sstatus=0;
 		connection = FERSDataConnection.createConnection();
 		int maxeventid,maxsessionid;
 		statement = connection.prepareStatement(query.getSelectMaxEventId());
@@ -523,7 +523,7 @@ public class EventDAO {
 		statement.setString(5, iEvent.getDuration());
 		statement.setString(6, iEvent.getEventtype());
 		
-		int status = statement.executeUpdate();
+	 estatus = statement.executeUpdate();
 		
 		int no_of_sessions = iEvent.getEventSession();
 		
@@ -537,11 +537,18 @@ public class EventDAO {
 		statement.setInt(2, iEvent.getEventCoordinatorId());
 		statement.setInt(3, maxeventid);;
 		statement.setInt(4, iEvent.getSeatsavailable());	
-		statement.executeUpdate();
+		sstatus= statement.executeUpdate();
 		}
 	
-		
-		return status;
+		if(estatus>0 && sstatus>0)
+		{
+			return estatus;
+		}
+		else
+		{
+			return -1;
+		}
+		//return status;
 	}	
 	
 
@@ -574,18 +581,26 @@ public class EventDAO {
 		
 		//"DELETE FROM EVENTSESSION WHERE EVENTSESSIONID=?"
 		///"DELETE FROM EVENT WHERE EVENTID=?"
+		//DELETE FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID = ? AND EVENTID = ?"
+		
+		
 		
 		connection = FERSDataConnection.createConnection();
+		String dsignup = query.getDeleteEventSessionSignup();
 		String dSession = query.getDeleteEventSession();
 		String dEvent = query.getDeleteEvent();
 		
+		
+		statement = connection.prepareStatement(dsignup);
+		statement.setInt(1, sessionId);
+		statement.setInt(2, eventId);
+		statement.executeUpdate();
+				
 		statement = connection.prepareStatement(dSession);
 		statement.setInt(1, sessionId);
-		statement.executeUpdate();
-		
-		statement = connection.prepareStatement(dEvent);
-		statement.setInt(1, eventId);
 		int status = statement.executeUpdate();
+		
+		
 		
 		
 		

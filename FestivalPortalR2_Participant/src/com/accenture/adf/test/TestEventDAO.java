@@ -266,6 +266,15 @@ public class TestEventDAO {
 			
 			//e.get(0)[0];
 			
+			Event e1 =new Event();
+			try {
+				dao.deleteEvent(1001, 10001);
+			} catch (FERSGenericException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
+			
 			
 			
 		} catch (ClassNotFoundException e) {

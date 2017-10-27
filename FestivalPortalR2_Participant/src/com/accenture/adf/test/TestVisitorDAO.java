@@ -221,6 +221,24 @@ public class TestVisitorDAO {
 		 * Pass this visitor object to updateVisitor method
 		 * and assert the value of changed value
 		 */		
+		int status;
+		try {
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			visitor.setAddress("New Address");
+			status = visitorDAO.updateVisitor(visitor);
+			if(status<=0){
+				System.err.println("ERROR: No entry updated");
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals("New Address", visitor.getAddress());
+		
 	}
 
 	/**
