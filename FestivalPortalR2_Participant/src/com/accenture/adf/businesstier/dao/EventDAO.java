@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -436,8 +437,39 @@ public class EventDAO {
 		// TODO: Pseudo-code are in the block comments above this method.
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
+		connection = FERSDataConnection.createConnection();
+		int statusevent=-1,statussession=-1;
+		int sessionid=0;
+		sessionid=updateEvent.getSessionId();
+		try{	
+		//updateTEvent:UPDATE EVENT E1 SET E1.NAME=?, E1.DESCRIPTION=?, E1.PLACES=?, E1.DURATION=?, E1.EVENTTYPE=? WHERE E1.EVENTID=?"
+		statement = connection.prepareStatement(query.getUpdateTEvent());
+		statement.setString(1,updateEvent.getName());
+		statement.setString(2,updateEvent.getDescription());
+		statement.setString(3,updateEvent.getPlace());
+		statement.setString(4,updateEvent.getDuration());
+		statement.setString(5,updateEvent.getEventtype());
+		statement.setInt(6,updateEvent.getEventid());
+		statusevent = statement.executeUpdate();
 		
-		return 0;
+		//UpdateEventSession:UPDATE EVENTSESSION SET SEATSAVAILABLE=? WHERE EVENTSESSIONID = ? AND EVENTID = ?;
+		statement =connection.prepareStatement(query.getUpdateEventSession());
+		statement.setInt(1,updateEvent.getSeatsavailable());
+		statement.setInt(2,sessionid);
+		statement.setInt(3,updateEvent.getEventid());
+		statussession=statement.executeUpdate();
+		}
+		catch(Exception e)
+		{
+			new FERSGenericException("Error in Updating",new Exception());
+			System.out.println(e.getMessage());
+		}
+		System.out.println(statusevent+""+statussession);
+		if(statusevent>0 && statussession>0)
+			statusevent=1;
+		else
+			statusevent=-1;
+		return statusevent;
 	}
 
 	/**
@@ -466,10 +498,25 @@ public class EventDAO {
 		// refer to the Component/Class Detail Design Document
 		
 		connection = FERSDataConnection.createConnection();
+		int maxeventid,maxsessionid;
+		statement = connection.prepareStatement(query.getSelectMaxEventId());
+      	resultSet= statement.executeQuery();
+		resultSet.next();
+		maxeventid = resultSet.getInt(1);
+		
+		
+		statement = connection.prepareStatement(query.getSelectMaxEventSessionId());
+      	resultSet= statement.executeQuery();
+		resultSet.next();
+		maxsessionid = resultSet.getInt(1);
+		
+      	
+		
+		
 		String qry = query.getInsertEvent();
 		statement = connection.prepareStatement(qry);
 		//SERT INTO EVENT(EVENTID, NAME, DESCRIPTION, PLACES, DURATION, EVENTTYPE) VALUES(?,?,?,?,?,?)"></property>
-		statement.setInt(1, iEvent.getEventid());
+		statement.setInt(1, ++maxeventid);
 		statement.setString(2, iEvent.getName());
 		statement.setString(3, iEvent.getDescription());
 		statement.setString(4, iEvent.getPlace());
@@ -478,6 +525,21 @@ public class EventDAO {
 		
 		int status = statement.executeUpdate();
 		
+		int no_of_sessions = iEvent.getEventSession();
+		
+//INSERT INTO EVENTSESSION(EVENTSESSIONiD, EVENTCOORDINATORID, EVENTID, SEATSAVAILABLE) VALUES (?,?,?,?)"></property>
+
+		String sessionqry = query.getInsertEventSession();
+		for(int i=1 ; i<=no_of_sessions ; i++)
+		{
+		statement = connection.prepareStatement(sessionqry);
+		statement.setInt(1, ++maxsessionid);
+		statement.setInt(2, iEvent.getEventCoordinatorId());
+		statement.setInt(3, maxeventid);;
+		statement.setInt(4, iEvent.getSeatsavailable());	
+		statement.executeUpdate();
+		}
+	
 		
 		return status;
 	}	
@@ -510,10 +572,24 @@ public class EventDAO {
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
 		
+		//"DELETE FROM EVENTSESSION WHERE EVENTSESSIONID=?"
+		///"DELETE FROM EVENT WHERE EVENTID=?"
+		
+		connection = FERSDataConnection.createConnection();
+		String dSession = query.getDeleteEventSession();
+		String dEvent = query.getDeleteEvent();
+		
+		statement = connection.prepareStatement(dSession);
+		statement.setInt(1, sessionId);
+		statement.executeUpdate();
+		
+		statement = connection.prepareStatement(dEvent);
+		statement.setInt(1, eventId);
+		int status = statement.executeUpdate();
 		
 		
 		
-		return 0;	
+		return status;	
 	}
 
 	/**
@@ -537,7 +613,25 @@ public class EventDAO {
 			throws ClassNotFoundException, SQLException {
 		
 		List<EventCoordinator> eventCoordinatorList = new ArrayList<EventCoordinator>();
-		
+		connection  =  FERSDataConnection.createConnection();
+		statement = connection.prepareStatement(query.getSelectEventCoordinator());
+		resultSet=statement.executeQuery();
+		while(resultSet.next())
+		{
+			EventCoordinator ec = new EventCoordinator();
+			ec.setEventcoordinatorid(Integer.parseInt(resultSet.getString(1)));
+			ec.setUserName(resultSet.getString(2));
+			eventCoordinatorList.add(ec);
+		}
+		eventCoordinatorList.sort(new Comparator<EventCoordinator>(){
+
+			@Override
+			public int compare(EventCoordinator ec, EventCoordinator ec1) 
+			{
+				return Integer.compare(ec1.getEventcoordinatorid(),ec.getEventcoordinatorid());
+			}
+			
+		});
 		// TODO: Add code here.....
 		// TODO: Pseudo-code are in the block comments above this method.
 		// TODO: For more comprehensive pseudo-code with details,

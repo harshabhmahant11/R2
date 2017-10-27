@@ -17,7 +17,7 @@ public class Event {
 	private int sessionId;
 	private int eventCoordinatorId;
 	private boolean add = false;
-	private int eventSession=1;
+	private int eventSession;
 
 	private Set<Visitor> visitors=new HashSet<Visitor>();
 	

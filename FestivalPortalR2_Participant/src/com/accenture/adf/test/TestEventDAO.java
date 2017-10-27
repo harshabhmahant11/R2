@@ -160,13 +160,18 @@ public class TestEventDAO {
 	
 	/**
 	 * Junit test case for getEventCoordinator
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testGetEventCoordinator(){
+	public void testGetEventCoordinator() throws ClassNotFoundException, SQLException{
 		/**
 		 * @TODO: Call getEventCoordinator method
 		 * Assert the size of return type arraylist
 		 */		
+		EventDAO edao = new EventDAO();
+		System.out.println(edao.getEventCoordinator());
+		assertEquals(edao.getEventCoordinator().size(),5);
 	}
 	
 	/**
@@ -194,12 +199,16 @@ public class TestEventDAO {
 		int status=0;
 		
 		
-		e.setEventid(10011);
+		
 		e.setDescription("des");
 		e.setDuration("0022");
-		e.setName("NewEvent");
+		e.setName("Event1");
 		e.setEventtype("Type");
 		e.setPlace("Place");
+		e.setEventCoordinatorId(101);
+		e.setSeatsavailable(1200);
+		e.setEventSession(5);
+		
 		
 		try {
 			status = dao.insertEvent(e);
@@ -217,15 +226,29 @@ public class TestEventDAO {
 	
 	/**
 	 * Junit test case for updateEvent
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
 	@Test
-	public void testUpdateEvent(){
+	public void testUpdateEvent() throws ClassNotFoundException, SQLException{
 		/**
 		 * @TODO: Fetch Event object by calling showAllEvents method
 		 * Update the values of event object
 		 * Call updateEvent method by passing this modified event as object
 		 * Assert the status of return type of updateEvent method
 		 */			
+		EventDAO edao =  new EventDAO();
+		Event event =  new Event();
+		event.setEventid(1006);
+		event.setDescription("My Event Desc");
+		event.setDuration("3000-5000");
+		event.setName("MyEvent");
+		event.setPlace("Bangalore");
+		event.setEventtype("Casual");
+		event.setSessionId(10008);
+		event.setSeatsavailable(100);
+		int status=edao.updateEvent(event);
+		assertTrue(status>0);
 	}
 	
 	/**
@@ -238,6 +261,22 @@ public class TestEventDAO {
 		 * Call deleteEvent method by passing this event id and event session id as object
 		 * Assert the status of return type of updateEvent method
 		 */		
+		try {
+			ArrayList<Object[]> e = dao.showAllEvents("Rose Parade");
+			
+			//e.get(0)[0];
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
