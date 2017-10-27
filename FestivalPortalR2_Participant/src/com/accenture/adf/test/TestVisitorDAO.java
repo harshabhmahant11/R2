@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -24,6 +25,9 @@ import com.accenture.adf.helper.FERSDataConnection;
  * 
  */
 public class TestVisitorDAO {
+	private static Connection connection = null;
+	private static PreparedStatement statement = null;
+	private static ResultSet resultSet = null;
 
 	private Visitor visitor;
 	private VisitorDAO visitorDAO;
@@ -176,6 +180,34 @@ public class TestVisitorDAO {
 		 * Pass this visitor object and valid eventid to registeredEvents method
 		 * and assert the value
 		 */		
+		
+		try {
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			//int eventid = 1002;
+			registeredEvents = visitorDAO.registeredEvents(visitor);
+			Iterator<Object[]> its = registeredEvents.iterator();
+
+			while(its.hasNext()){
+				
+			for(int i=0;i<registeredEvents.size();i++){
+				Object[] obj = new Object[11];
+				obj = registeredEvents.get(i);
+				System.out.println("Printing the events registered by the visiorId = "+visitor.getVisitorId());;
+				for(Object o:obj){
+					System.out.print(" "+o+" ");
+				}
+				its.next();
+			}
+			
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -201,7 +233,37 @@ public class TestVisitorDAO {
 		 * Pass this visitor object and valid eventid to unregisterEvent method
 		 * and assert the value
 		 */		
+		int status=1;
+		try {
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			
+				visitorDAO.unregisterEvent(visitor,1001,10001);
+				String qry = "DELETE FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID = 10007 AND VISITORID = 1002 AND EVENTID = 1006;";
+				connection = FERSDataConnection.createConnection();
+				statement = connection.prepareStatement(qry);
+			
+				status= statement.executeUpdate();
+				//resultSet.next();
+				//status=resultSet.getInt(1);
+				
+	
+		} catch (ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		}
+		
+		assertEquals(1,status);
 	}
+	
+	
 	
 	/**
 	 * Test case for method change password
