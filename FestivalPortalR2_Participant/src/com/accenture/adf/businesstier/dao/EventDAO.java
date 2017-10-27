@@ -581,11 +581,21 @@ public class EventDAO {
 		
 		//"DELETE FROM EVENTSESSION WHERE EVENTSESSIONID=?"
 		///"DELETE FROM EVENT WHERE EVENTID=?"
+		//DELETE FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID = ? AND EVENTID = ?"
+		
+		
 		
 		connection = FERSDataConnection.createConnection();
+		String dsignup = query.getDeleteEventSessionSignup();
 		String dSession = query.getDeleteEventSession();
 		String dEvent = query.getDeleteEvent();
 		
+		
+		statement = connection.prepareStatement(dsignup);
+		statement.setInt(1, sessionId);
+		statement.setInt(2, eventId);
+		statement.executeUpdate();
+				
 		statement = connection.prepareStatement(dSession);
 		statement.setInt(1, sessionId);
 		statement.executeUpdate();
