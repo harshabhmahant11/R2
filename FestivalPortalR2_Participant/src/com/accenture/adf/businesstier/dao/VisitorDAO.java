@@ -168,13 +168,30 @@ public class VisitorDAO {
         // TODO:  Pseudo-code are in the block comments above this method.
         // TODO:  For more comprehensive pseudo-code with details, 
 		//        refer to the Component/Class Detail Design Document
-		
+		//SELECT COUNT(*) AS EVENTCOUNT FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID=? AND VISITORID=? AND EVENTID=?"
 		connection = FERSDataConnection.createConnection();
+		statement = connection.prepareStatement(query.getCheckEvent());
+		statement.setInt(1,sessionid);
+		statement.setInt(2,visitor.getVisitorId());
+		statement.setInt(3,eventid);
+		resultSet= statement.executeQuery();
+		resultSet.next();
+		System.out.println(resultSet.getInt(1));
+		if(resultSet.getInt(1)<=0)
+		{
+		//VISITORID,EVENTSESSIONID,EVENTID
 		statement = connection.prepareStatement(query.getRegisterQuery());
 		statement.setInt(1,visitor.getVisitorId());
-		statement.setInt(2,eventid);
-		statement.setInt(3,sessionid);
+		statement.setInt(2,sessionid);
+		statement.setInt(3,eventid);
 		int status=statement.executeUpdate();
+		System.out.println(status);
+		}
+		else
+		{
+			new FERSGenericException("USER IS ALREADY REGISTERED",new Exception());
+			
+		}
 
 	}
 
