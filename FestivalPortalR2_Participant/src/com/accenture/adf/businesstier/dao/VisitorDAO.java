@@ -217,7 +217,7 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 		//E3.EVENTCOORDINATORID = E4.EVENTCOORDINATORID  AND E2.VISITORID = 1001 AND E3.EVENTSESSIONID in 
 		//(SELECT EVENTSESSIONID FROM EVENTSESSIONSIGNUP) ORDER BY E1.EVENTID DESC
 		while(resultSet.next()){
-			Object[] eventObject = new Object[10];
+			Object[] eventObject = new Object[11];
 			eventObject[0] = resultSet.getInt("eventid");
 			eventObject[1] = resultSet.getString("name");
 			eventObject[2] = resultSet.getString("description");
@@ -228,6 +228,7 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 			eventObject[7] = resultSet.getString("lastname");
 			eventObject[8] = resultSet.getInt("EVENTSESSIONID");
 			eventObject[9] = resultSet.getInt("SIGNUPID");
+			eventObject[10] = visitor.getVisitorId();
 			
 			eventList.add(eventObject);
 			

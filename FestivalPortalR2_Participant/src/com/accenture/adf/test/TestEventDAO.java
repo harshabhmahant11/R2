@@ -190,6 +190,29 @@ public class TestEventDAO {
 		 * Call insertEvent method by passing this event object
 		 * Assert the status of return type of this insertEvent method
 		 */		
+		Event e = new Event();
+		int status=0;
+		
+		
+		e.setEventid(10011);
+		e.setDescription("des");
+		e.setDuration("0022");
+		e.setName("NewEvent");
+		e.setEventtype("Type");
+		e.setPlace("Place");
+		
+		try {
+			status = dao.insertEvent(e);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		assertEquals(1, status);
+		
+		
 	}
 	
 	/**
