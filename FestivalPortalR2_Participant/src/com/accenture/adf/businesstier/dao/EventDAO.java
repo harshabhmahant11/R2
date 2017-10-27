@@ -246,11 +246,6 @@ public class EventDAO {
 		}
 		
 		
-		
-		// TODO: Add code here.....
-		// TODO: Pseudo-code are in the block comments above this method.
-		// TODO: For more comprehensive pseudo-code with details,
-		// refer to the Component/Class Detail Design Document
 		resultSet.close();
 		FERSDataConnection.closeConnection();
 		return eventList;
@@ -306,12 +301,7 @@ public class EventDAO {
 			
 		}
 		
-		
-		
-		// TODO: Add code here.....
-		// TODO: Pseudo-code are in the block comments above this method.
-		// TODO: For more comprehensive pseudo-code with details,
-		// refer to the Component/Class Detail Design Document
+	
 		resultSet.close();
 		FERSDataConnection.closeConnection();
 		return eventList;
@@ -367,13 +357,7 @@ public class EventDAO {
 			eventList.add(eventObject);
 			
 		}
-		
-		
-		
-		// TODO: Add code here.....
-		// TODO: Pseudo-code are in the block comments above this method.
-		// TODO: For more comprehensive pseudo-code with details,
-		// refer to the Component/Class Detail Design Document
+
 		resultSet.close();
 		FERSDataConnection.closeConnection();
 
@@ -424,12 +408,7 @@ public class EventDAO {
 			event.setSessionId(resultSet.getInt("eventsessionid"));
 		}
 		
-		
-		// TODO: Add code here.....
-		// TODO: Pseudo-code are in the block comments above this method.
-		// TODO: For more comprehensive pseudo-code with details,
-		// refer to the Component/Class Detail Design Document
-		
+	
 		return event;
 	}
 
@@ -478,7 +457,7 @@ public class EventDAO {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public int insertEvent(Event insertEvent) throws ClassNotFoundException,
+	public int insertEvent(Event iEvent) throws ClassNotFoundException,
 			SQLException {
 		
 		// TODO: Add code here.....
@@ -486,7 +465,21 @@ public class EventDAO {
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
 		
-		return 0;
+		connection = FERSDataConnection.createConnection();
+		String qry = query.getInsertEvent();
+		statement = connection.prepareStatement(qry);
+		//SERT INTO EVENT(EVENTID, NAME, DESCRIPTION, PLACES, DURATION, EVENTTYPE) VALUES(?,?,?,?,?,?)"></property>
+		statement.setInt(1, iEvent.getEventid());
+		statement.setString(2, iEvent.getName());
+		statement.setString(3, iEvent.getDescription());
+		statement.setString(4, iEvent.getPlace());
+		statement.setString(5, iEvent.getDuration());
+		statement.setString(6, iEvent.getEventtype());
+		
+		int status = statement.executeUpdate();
+		
+		
+		return status;
 	}	
 	
 
@@ -516,6 +509,9 @@ public class EventDAO {
 		// TODO: Pseudo-code are in the block comments above this method.
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
+		
+		
+		
 		
 		return 0;	
 	}
