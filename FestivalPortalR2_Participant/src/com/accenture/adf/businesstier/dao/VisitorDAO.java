@@ -383,17 +383,27 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 		connection = FERSDataConnection.createConnection();
 		statement = connection.prepareStatement(query.getDeleteEventQuery());
 		statement.setInt(1,eventsessionid);
-		statement.setInt(2,eventid);
-		statement.setInt(3,visitor.getVisitorId());
+		statement.setInt(2,visitor.getVisitorId());
+		statement.setInt(3,eventid);
 		int status = statement.executeUpdate();
-		if(status<0){
+		if(status<=0){
 			log.error("No entry deleted.");
 		}
 		// TODO:  Add code here.....
         // TODO:  Pseudo-code are in the block comments above this method.
         // TODO:  For more comprehensive pseudo-code with details, 
 		//        refer to the Component/Class Detail Design Document
-
+//
+//		connection = FERSDataConnection.createConnection();
+//		statement = connection.prepareStatement(query.getDeleteEventQuery());
+//		statement.setInt(1, eventid);
+//		statement.setInt(2,visitor.getVisitorId());
+//		statement.setInt(3,eventsessionid);
+//		int status=statement.executeUpdate();
+//		if (status <= 0)
+//			throw new FERSGenericException("Records not Present", new Exception());
+//		log.info("unregistering event in Database for the visitor :" + visitor.getFirstName());
+//		FERSDataConnection.closeConnection();
 	
 		FERSDataConnection.closeConnection();
 	}
