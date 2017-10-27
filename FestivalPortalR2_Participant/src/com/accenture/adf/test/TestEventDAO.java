@@ -67,6 +67,7 @@ public class TestEventDAO {
 	 * @throws Exception
 	 */
 	@Before
+
 	public void setUp() throws Exception {
 		showAllEvents = new ArrayList<Object[]>();
 		dao = new EventDAO();
@@ -93,6 +94,22 @@ public class TestEventDAO {
 		 * @TODO: Call showAllEvents method and assert it for
 		 * size of returned type list
 		 */	
+	ArrayList<Object[]> eventList = new ArrayList<Object[]>();
+
+		try {
+			eventList = dao.showAllEvents();
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(43, eventList.size());	
 	}
 	
 	/**
@@ -106,7 +123,48 @@ public class TestEventDAO {
 		 * Call the updateEventDeletions for eventId
 		 * Again find out the seats available for this event
 		 * testSeatsAvailableBefore should be 1 more then testSeatsAvailableAfter
-		 */		
+		 */
+		String qry = "SELECT SEATSAVAILABLE FROM EVENTSESSION WHERE EVENTID=? AND EVENTSESSIONID=?;";
+		try {
+			connection = FERSDataConnection.createConnection();
+			statement = connection.prepareStatement(qry);
+			statement.setInt(1, 10024);
+			statement.setInt(2, 10054);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			
+			int seats1 = resultSet.getInt(1);
+			
+			dao.updateEventDeletions(10024, 10054);
+			
+			
+			statement = connection.prepareStatement(qry);
+			statement.setInt(1, 10024);
+			statement.setInt(2, 10054);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			
+			int seats2 = resultSet.getInt(1);
+			
+			
+			assertEquals(++seats1, seats2);
+			
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 
 	/**
@@ -118,6 +176,20 @@ public class TestEventDAO {
 		 * @TODO: Call updateEventDeletions for incorrect eventid and it should
 		 * throw an exception
 		 */
+	boolean flag=false;
+		try {
+			dao.updateEventDeletions(024, 10054);
+		} catch (ClassNotFoundException e) {
+			flag = true;
+		} catch (SQLException e) {
+			flag = true;
+
+		} catch (Exception e) {
+			flag = true;
+
+		}
+			
+		assertEquals(true, flag);	
 	}
 
 	/**
@@ -132,6 +204,46 @@ public class TestEventDAO {
 		 * Again find out the seats available for this event
 		 * testSeatsAvailableBefore should be 1 less then testSeatsAvailableAfter
 		 */	
+	String qry = "SELECT SEATSAVAILABLE FROM EVENTSESSION WHERE EVENTID=? AND EVENTSESSIONID=?;";
+		try {
+			connection = FERSDataConnection.createConnection();
+			statement = connection.prepareStatement(qry);
+			statement.setInt(1, 10024);
+			statement.setInt(2, 10054);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			
+			int seats1 = resultSet.getInt(1);
+			
+			dao.updateEventNominations(10024, 10054);
+			
+			
+			statement = connection.prepareStatement(qry);
+			statement.setInt(1, 10024);
+			statement.setInt(2, 10054);
+			resultSet = statement.executeQuery();
+			resultSet.next();
+			
+			int seats2 = resultSet.getInt(1);
+			
+			
+			assertEquals(--seats1, seats2);
+			
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 	/**
@@ -143,6 +255,22 @@ public class TestEventDAO {
 		 * @TODO: Call updateEventNominations for incorrect eventid and it should
 		 * throw an exception
 		 */	
+	boolean flag=false;
+		try {
+			dao.updateEventDeletions(024, 10054);
+		} catch (ClassNotFoundException e) {
+			flag = true;
+		} catch (SQLException e) {
+			flag = true;
+
+		} catch (Exception e) {
+			flag = true;
+
+		}
+			
+		assertEquals(true, flag);
+		
+	
 	}
 
 	/**
@@ -190,7 +318,20 @@ public class TestEventDAO {
 		/**
 		 * @TODO: Call getEvent method 
 		 * Assert the returned Event type with the passed value of event id
-		 */		
+		 */
+		
+		Event e1 = new Event();
+	try {
+		e1=dao.getEvent(10024,10054);
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		assertEquals(10024, e1.getEventid());
+		
 	}	
 	
 	/**
