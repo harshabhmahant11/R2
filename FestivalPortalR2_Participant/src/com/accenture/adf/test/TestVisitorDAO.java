@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -176,6 +177,34 @@ public class TestVisitorDAO {
 		 * Pass this visitor object and valid eventid to registeredEvents method
 		 * and assert the value
 		 */		
+		
+		try {
+			visitor = visitorDAO.searchUser("bsmith", "password");
+			//int eventid = 1002;
+			registeredEvents = visitorDAO.registeredEvents(visitor);
+			Iterator<Object[]> its = registeredEvents.iterator();
+
+			while(its.hasNext()){
+				
+			for(int i=0;i<registeredEvents.size();i++){
+				Object[] obj = new Object[11];
+				obj = registeredEvents.get(i);
+				System.out.println("Printing the events registered by the visiorId = "+visitor.getVisitorId());;
+				for(Object o:obj){
+					System.out.print(" "+o+" ");
+				}
+				its.next();
+			}
+			
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
