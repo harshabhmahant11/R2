@@ -380,6 +380,7 @@ ArrayList<Object[]> eventList = new ArrayList<Object[]>();
 	public void unregisterEvent(Visitor visitor, int eventid, int eventsessionid)
 			throws ClassNotFoundException, SQLException, Exception {
 
+	
 		connection = FERSDataConnection.createConnection();
 		statement = connection.prepareStatement(query.getDeleteEventQuery());
 		statement.setInt(1,eventsessionid);

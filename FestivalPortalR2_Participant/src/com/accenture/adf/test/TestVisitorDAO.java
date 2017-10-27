@@ -217,7 +217,7 @@ public class TestVisitorDAO {
 				//resultSet.next();
 				//status=resultSet.getInt(1);
 				
-			
+	
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 
