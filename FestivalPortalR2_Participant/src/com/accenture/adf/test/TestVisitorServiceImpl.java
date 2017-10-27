@@ -3,6 +3,7 @@ package com.accenture.adf.test;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.accenture.adf.businesstier.dao.EventDAO;
 import com.accenture.adf.businesstier.dao.VisitorDAO;
 import com.accenture.adf.businesstier.entity.Event;
 import com.accenture.adf.businesstier.entity.Visitor;
@@ -26,6 +28,10 @@ import com.accenture.adf.helper.FERSDataConnection;
  *
  */
 public class TestVisitorServiceImpl {
+	private static Connection connection = null;
+	private static PreparedStatement statement = null;
+	private static ResultSet resultSet = null;
+
 
 	private List<Event> visitorList;	
 	private Visitor visitor;
@@ -51,6 +57,8 @@ public class TestVisitorServiceImpl {
 		/**
 		 * @TODO: Release all the objects here by assigning them null  
 		 */
+		visitorServiceImpl=null;
+		visitor=null;
 	}
 
 	/**
@@ -63,6 +71,16 @@ public class TestVisitorServiceImpl {
 		 * call the method createVisitor by passing an argument of this visitor 
 		 * object and then asserting the returned type of this method
 		 */		
+		visitor.setAddress("address");
+		visitor.setEmail("email");
+		visitor.setFirstName("firstName");
+		visitor.setLastName("LastName");
+		visitor.setPassword("password");
+		visitor.setPhoneNumber("phoneNumber");
+		visitor.setUserName("TestUserName");
+		boolean status = visitorServiceImpl.createVisitor(visitor);
+		
+		assertEquals(true, status);
 	}
 
 	/**
@@ -74,6 +92,10 @@ public class TestVisitorServiceImpl {
 		 * @TODO: Call searchVisitor method by passing the appropriate arguments 
 		 * and then asserting the returned type visitor username with the argument passed
 		 */		
+
+		visitor = visitorServiceImpl.searchVisitor("bsmith", "password");
+		assertEquals("bsmith",visitor.getUserName() );
+
 	}
 
 	/**
@@ -86,6 +108,65 @@ public class TestVisitorServiceImpl {
 		 * can be retrieved using searchVisitor method and then asserting the returned
 		 * type of RegisterVisitor method 
 		 */		
+		visitor = visitorServiceImpl.searchVisitor("bsmith", "password");
+
+		EventDAO edao = new EventDAO();
+		visitorServiceImpl.RegisterVisitor(visitor, 1001,10001);
+
+		try {
+			connection = FERSDataConnection.createConnection();
+			
+			String qry = "SELECT COUNT(*) AS EVENTCOUNT FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID=? AND VISITORID=? AND EVENTID=?;";
+			
+			
+			statement = connection.prepareStatement(qry);
+			
+			statement.setInt(1, 10001);
+			statement.setInt(2, visitor.getVisitorId());
+			statement.setInt(3, 1001);
+			
+			resultSet = statement.executeQuery();
+			
+			 resultSet.next();
+			
+			 int count = resultSet.getInt(1);
+			 
+			 
+			 assertEquals(1, count);
+			 
+			 
+			 int retVal;
+				int retVal2;
+				connection = FERSDataConnection.createConnection();
+				statement = connection.prepareStatement("SELECT SEATSAVAILABLE FROM EVENTSESSION WHERE EVENTSESSIONID = 10001");
+				resultSet =	statement.executeQuery();
+				resultSet.next();
+				retVal = resultSet.getInt("SEATSAVAILABLE");
+				retVal--;
+				
+				edao.updateEventNominations(1001,10001); 
+				
+				
+				resultSet =	statement.executeQuery();
+				resultSet.next();
+				retVal2 = resultSet.getInt("SEATSAVAILABLE");
+				
+				assertEquals(retVal,retVal2 );
+			 
+			 
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -98,7 +179,16 @@ public class TestVisitorServiceImpl {
 		 * can be retrieved using searchVisitor method and then asserting the returned
 		 * type of showRegisteredEvents method 
 		 */		
+		ArrayList<Object[]> registeredEventList = new ArrayList<Object[]>();
+
+		visitor = visitorServiceImpl.searchVisitor("npatel", "password");
+		
+		
+		registeredEventList = visitorServiceImpl.showRegisteredEvents(visitor);
+		
+		assertEquals(1, registeredEventList.size());
 	}
+
 
 	/**
 	 * Test case for method updateVisitorDetails

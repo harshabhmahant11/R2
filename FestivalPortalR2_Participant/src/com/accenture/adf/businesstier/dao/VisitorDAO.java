@@ -176,7 +176,7 @@ public class VisitorDAO {
 		statement.setInt(3,eventid);
 		resultSet= statement.executeQuery();
 		resultSet.next();
-		System.out.println(resultSet.getInt(1));
+		//System.out.println(resultSet.getInt(1));
 		if(resultSet.getInt(1)<=0)
 		{
 		//VISITORID,EVENTSESSIONID,EVENTID
@@ -185,7 +185,7 @@ public class VisitorDAO {
 		statement.setInt(2,sessionid);
 		statement.setInt(3,eventid);
 		int status=statement.executeUpdate();
-		System.out.println(status);
+		//System.out.println(status);
 		}
 		else
 		{
