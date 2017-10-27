@@ -310,7 +310,20 @@ public class TestEventDAO {
 		/**
 		 * @TODO: Call getEvent method 
 		 * Assert the returned Event type with the passed value of event id
-		 */		
+		 */
+		
+		Event e1 = new Event();
+	try {
+		e1=dao.getEvent(10024,10054);
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		assertEquals(10024, e1.getEventid());
+		
 	}	
 	
 	/**
