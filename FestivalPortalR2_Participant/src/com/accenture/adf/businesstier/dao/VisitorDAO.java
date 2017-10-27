@@ -201,13 +201,57 @@ public class VisitorDAO {
 	 */
 	public ArrayList<Object[]> registeredEvents(Visitor visitor)throws ClassNotFoundException, SQLException {
 
-		ArrayList<Object[]> eventList = new ArrayList<Object[]>();
+ArrayList<Object[]> eventList = new ArrayList<Object[]>();
+		
+		
+		try {
+			connection = FERSDataConnection.createConnection();
+	
+		statement = connection.prepareStatement(query.getStatusQuery());
+		statement.setInt(1, visitor.getVisitorId());
+		resultSet = statement.executeQuery();
+		//SELECT DISTINCT E1.EVENTID, E1.NAME, E1.DESCRIPTION, E1.PLACES, E1.DURATION, E1.EVENTTYPE, 
+		//E4.FIRSTNAME,E4.LASTNAME, E3.EVENTSESSIONID, E2.SIGNUPID FROM EVENT E1, EVENTSESSIONSIGNUP E2, 
+		//EVENTSESSION E3, EVENTCOORDINATOR E4  WHERE E1.EVENTID = E2.EVENTID  AND 
+		//E2.EVENTID=E3.EVENTID AND E2.EVENTSESSIONID=E3.EVENTSESSIONID  AND 
+		//E3.EVENTCOORDINATORID = E4.EVENTCOORDINATORID  AND E2.VISITORID = 1001 AND E3.EVENTSESSIONID in 
+		//(SELECT EVENTSESSIONID FROM EVENTSESSIONSIGNUP) ORDER BY E1.EVENTID DESC
+		while(resultSet.next()){
+			Object[] eventObject = new Object[10];
+			eventObject[0] = resultSet.getInt("eventid");
+			eventObject[1] = resultSet.getString("name");
+			eventObject[2] = resultSet.getString("description");
+			eventObject[3] = resultSet.getString("places");
+			eventObject[4] = resultSet.getString("duration");
+			eventObject[5] = resultSet.getString("eventtype");
+			eventObject[6] = resultSet.getString("firstname");
+			eventObject[7] = resultSet.getString("lastname");
+			eventObject[8] = resultSet.getInt("EVENTSESSIONID");
+			eventObject[9] = resultSet.getInt("SIGNUPID");
+			
+			eventList.add(eventObject);
+			
+		}
+		resultSet.close();
+		FERSDataConnection.closeConnection();
+		
 		
 		// TODO:  Add code here.....
         // TODO:  Pseudo-code are in the block comments above this method.
         // TODO:  For more comprehensive pseudo-code with details, 
 		//        refer to the Component/Class Detail Design Document
 
+			} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+				System.out.println(e);
+				log.error(e.getMessage());
+			e.printStackTrace();
+		} catch (SQLException e) {
+			System.out.println(e);
+			log.error(e.getMessage());
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return eventList;
 	}
 
@@ -336,11 +380,22 @@ public class VisitorDAO {
 	public void unregisterEvent(Visitor visitor, int eventid, int eventsessionid)
 			throws ClassNotFoundException, SQLException, Exception {
 
+		connection = FERSDataConnection.createConnection();
+		statement = connection.prepareStatement(query.getDeleteEventQuery());
+		statement.setInt(1,eventsessionid);
+		statement.setInt(2,eventid);
+		statement.setInt(3,visitor.getVisitorId());
+		int status = statement.executeUpdate();
+		if(status<0){
+			log.error("No entry deleted.");
+		}
 		// TODO:  Add code here.....
         // TODO:  Pseudo-code are in the block comments above this method.
         // TODO:  For more comprehensive pseudo-code with details, 
 		//        refer to the Component/Class Detail Design Document
 
+	
+		FERSDataConnection.closeConnection();
 	}
 
 }

@@ -62,7 +62,38 @@ public class TestVisitorDAO {
 		 * Call insertData method by passing this visitor object
 		 * Search this new visitor object by calling searchUser method
 		 * Assert the values of username
-		 */		
+		 */	
+		visitor.setFirstName("Dhruv");
+		visitor.setAddress("ds");
+		visitor.setAdmin(false);
+		visitor.setEmail("Dhruv2@gmail.com");
+		visitor.setLastName("Arora");
+		visitor.setPassword("123");
+		visitor.setPhoneNumber("98979865");
+		visitor.setVisitorId(1012);
+		visitor.setUserName("dhruv12");
+		
+		boolean flag=false;
+		Visitor v1 = null;
+		try{
+			flag=visitorDAO.insertData(visitor);
+			 v1 = new Visitor();
+			//v1=visitorDAO.searchUser(visitor.getUserName(), visitor.getPassword());
+			v1=visitorDAO.searchUser("dhruv12", "123");	
+		}catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			fail("runtime"+e);
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals(true,flag);
+		//assertEquals(visitor.getUserName(),v1.getUserName());
+	
 	}	
 
 	/**
@@ -74,6 +105,22 @@ public class TestVisitorDAO {
 		 * @TODO: Call searchUser method for valid values of username
 		 * and password and assert the value of username for the returned type of method
 		 */		
+		visitor.setUserName("bsmith");
+		visitor.setVisitorId(1001);
+		Visitor v1 = null;
+		try {
+			v1 = visitorDAO.searchUser("bsmith", "password");
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(visitor.getVisitorId(),v1.getVisitorId());
+	
 	}
 
 	/**
