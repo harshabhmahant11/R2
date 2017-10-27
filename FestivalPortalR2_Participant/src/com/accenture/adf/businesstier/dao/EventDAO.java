@@ -598,11 +598,9 @@ public class EventDAO {
 				
 		statement = connection.prepareStatement(dSession);
 		statement.setInt(1, sessionId);
-		statement.executeUpdate();
-		
-		statement = connection.prepareStatement(dEvent);
-		statement.setInt(1, eventId);
 		int status = statement.executeUpdate();
+		
+		
 		
 		
 		
