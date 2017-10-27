@@ -250,18 +250,26 @@ public class TestVisitorDAO {
 		 * Pass this visitor object and valid eventid to unregisterEvent method
 		 * and assert the value
 		 */		
+		/**
+		 * @TODO: Fetch visitor object by calling searchUser for valid values of username and password
+		 * Pass this visitor object and valid eventid to unregisterEvent method
+		 * and assert the value
+		 */		
 		int status=1;
 		try {
 			visitor = visitorDAO.searchUser("bsmith", "password");
 			
-				visitorDAO.unregisterEvent(visitor,1001,10001);
-				String qry = "DELETE FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID = 10007 AND VISITORID = 1002 AND EVENTID = 1006;";
+				
+			
+				visitorDAO.unregisterEvent(visitor,1002,10002);
+				String qry = "SELECT COUNT(*) AS EVENTCOUNT FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID=10002 AND VISITORID=1001 AND EVENTID=1002";
+				//String qry = "DELETE FROM EVENTSESSIONSIGNUP WHERE EVENTSESSIONID = 10007 AND VISITORID = 1002 AND EVENTID = 1006;";
 				connection = FERSDataConnection.createConnection();
 				statement = connection.prepareStatement(qry);
 			
-				status= statement.executeUpdate();
-				//resultSet.next();
-				//status=resultSet.getInt(1);
+				resultSet= statement.executeQuery();
+				resultSet.next();
+				status=resultSet.getInt(1);
 				
 	
 		} catch (ClassNotFoundException e) {
@@ -277,7 +285,9 @@ public class TestVisitorDAO {
 
 		}
 		
-		assertEquals(1,status);
+		assertEquals(0,status);
+		
+		
 	}
 	
 	
