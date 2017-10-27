@@ -466,10 +466,25 @@ public class EventDAO {
 		// refer to the Component/Class Detail Design Document
 		
 		connection = FERSDataConnection.createConnection();
+		int maxeventid,maxsessionid;
+		statement = connection.prepareStatement(query.getSelectMaxEventId());
+      	resultSet= statement.executeQuery();
+		resultSet.next();
+		maxeventid = resultSet.getInt(1);
+		
+		
+		statement = connection.prepareStatement(query.getSelectMaxEventSessionId());
+      	resultSet= statement.executeQuery();
+		resultSet.next();
+		maxsessionid = resultSet.getInt(1);
+		
+      	
+		
+		
 		String qry = query.getInsertEvent();
 		statement = connection.prepareStatement(qry);
 		//SERT INTO EVENT(EVENTID, NAME, DESCRIPTION, PLACES, DURATION, EVENTTYPE) VALUES(?,?,?,?,?,?)"></property>
-		statement.setInt(1, iEvent.getEventid());
+		statement.setInt(1, ++maxeventid);
 		statement.setString(2, iEvent.getName());
 		statement.setString(3, iEvent.getDescription());
 		statement.setString(4, iEvent.getPlace());
@@ -478,6 +493,21 @@ public class EventDAO {
 		
 		int status = statement.executeUpdate();
 		
+		int no_of_sessions = iEvent.getEventSession();
+		
+//INSERT INTO EVENTSESSION(EVENTSESSIONiD, EVENTCOORDINATORID, EVENTID, SEATSAVAILABLE) VALUES (?,?,?,?)"></property>
+
+		String sessionqry = query.getInsertEventSession();
+		for(int i=1 ; i<=no_of_sessions ; i++)
+		{
+		statement = connection.prepareStatement(sessionqry);
+		statement.setInt(1, ++maxsessionid);
+		statement.setInt(2, iEvent.getEventCoordinatorId());
+		statement.setInt(3, maxeventid);;
+		statement.setInt(4, iEvent.getSeatsavailable());	
+		statement.executeUpdate();
+		}
+	
 		
 		return status;
 	}	
@@ -510,10 +540,24 @@ public class EventDAO {
 		// TODO: For more comprehensive pseudo-code with details,
 		// refer to the Component/Class Detail Design Document
 		
+		//"DELETE FROM EVENTSESSION WHERE EVENTSESSIONID=?"
+		///"DELETE FROM EVENT WHERE EVENTID=?"
+		
+		connection = FERSDataConnection.createConnection();
+		String dSession = query.getDeleteEventSession();
+		String dEvent = query.getDeleteEvent();
+		
+		statement = connection.prepareStatement(dSession);
+		statement.setInt(1, sessionId);
+		statement.executeUpdate();
+		
+		statement = connection.prepareStatement(dEvent);
+		statement.setInt(1, eventId);
+		int status = statement.executeUpdate();
 		
 		
 		
-		return 0;	
+		return status;	
 	}
 
 	/**

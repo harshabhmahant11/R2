@@ -194,12 +194,16 @@ public class TestEventDAO {
 		int status=0;
 		
 		
-		e.setEventid(10011);
+		
 		e.setDescription("des");
 		e.setDuration("0022");
-		e.setName("NewEvent");
+		e.setName("Event1");
 		e.setEventtype("Type");
 		e.setPlace("Place");
+		e.setEventCoordinatorId(101);
+		e.setSeatsavailable(1200);
+		e.setEventSession(5);
+		
 		
 		try {
 			status = dao.insertEvent(e);
@@ -238,6 +242,22 @@ public class TestEventDAO {
 		 * Call deleteEvent method by passing this event id and event session id as object
 		 * Assert the status of return type of updateEvent method
 		 */		
+		try {
+			ArrayList<Object[]> e = dao.showAllEvents("Rose Parade");
+			
+			//e.get(0)[0];
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
