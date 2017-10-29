@@ -89,7 +89,7 @@ return false;
 			<tr>
 				<td>
 				<div id="content">New Visitor:</div>
-				<div id="content"><a href="/FestivalPortalR2/registration.jsp">Register
+				<div id="content"><a href="registration.jsp">Register
 				here</a></div>
 				</td>
 			</tr>
