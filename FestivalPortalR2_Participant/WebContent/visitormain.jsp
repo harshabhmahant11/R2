@@ -108,10 +108,10 @@ return false;
 										<td align="center"><jstlcore:out value="${regEvent[5]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[3]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[4]}"></jstlcore:out></td>
-										<td align="center"><jstlcore:out value="${regEvent[7]}"></jstlcore:out></td>
+										<td align="center"><jstlcore:out value="${regEvent[8]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[6]}"></jstlcore:out></td>
 										<td width="100px" bgcolor="#CCCC99">
-										<a href="<jstlcore:url value="/eventunreg.htm?eventId=${regEvent[0]}&eventsessionid=${regEvent[7]}"/>">Release</a>
+										<a href="<jstlcore:url value="/eventunreg.htm?eventId=${regEvent[0]}&eventsessionid=${regEvent[8]}"/>">Release</a>
 										</td>
 									</tr>									
 								</jstlcore:forEach>
