@@ -131,6 +131,7 @@ public class VisitorDAO {
 			visitor.setEmail(resultSet.getString("email"));
 			visitor.setPhoneNumber(resultSet.getString("phonenumber"));
 			visitor.setAddress(resultSet.getString("address"));
+			visitor.setAdmin(resultSet.getBoolean("isadmin"));
 		}
 		resultSet.close();
 		FERSDataConnection.closeConnection();
