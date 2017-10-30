@@ -105,9 +105,9 @@ return false;
 										<td align="center"><jstlcore:out value="${regEvent[0]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[1]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[2]}"></jstlcore:out></td>
-										<td align="center"><jstlcore:out value="${regEvent[5]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[3]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[4]}"></jstlcore:out></td>
+										<td align="center"><jstlcore:out value="${regEvent[5]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[8]}"></jstlcore:out></td>
 										<td align="center"><jstlcore:out value="${regEvent[6]}"></jstlcore:out></td>
 										<td width="100px" bgcolor="#CCCC99">
