@@ -349,7 +349,7 @@ public class TestEventDAO {
 		int status=0;
 		
 		
-		
+		e.setEventid(1050);
 		e.setDescription("des");
 		e.setDuration("0022");
 		e.setName("Event1");

@@ -84,6 +84,15 @@ public class TestVisitorController {
 		 * @TODO: Call newVisitor method by passing request object as null and 
 		 * asserting the model view name
 		 */	
+		try{
+			request = new MockHttpServletRequest("GET","/newVisitor.htm");
+			
+			modelAndView = controller.newVisitor(null, response);
+			}catch(Exception exception){
+				fail("Exception"+exception.getMessage());
+			}
+		
+		assertEquals(null,modelAndView.getViewName());
 	}
 
 	/**
@@ -96,6 +105,17 @@ public class TestVisitorController {
 		 * Set request parameters for USERNAME and PASSWORD for valid values
 		 * Call searchVisitor method and assert model view name 
 		 */	
+		
+		try{
+			request = new MockHttpServletRequest("GET","/searchVisitor.htm");
+			request.setParameter("USERNAME", "ylee");
+			request.setParameter("PASSWORD", "password");
+			modelAndView = controller.newVisitor(request, response);
+		}catch(Exception exception){
+			fail("Exception"+exception.getMessage());
+		}
+		
+		assertEquals("/registration.jsp", modelAndView.getViewName());
 	}
 
 	/**
@@ -108,6 +128,18 @@ public class TestVisitorController {
 		 * Set request parameters for USERNAME and PASSWORD for invalid values
 		 * Call searchVisitor method and assert model view name 
 		 */	
+		request = new MockHttpServletRequest("GET", "/searchVisitor.htm");
+		request.setParameter("USERNAME", "amith");
+		request.setParameter("PASSWORD", "rajmp");
+		try {
+			modelAndView = controller.searchVisitor(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals("/index.jsp", modelAndView.getViewName());
+		
+		
 	}
 
 	/**
@@ -119,6 +151,15 @@ public class TestVisitorController {
 		 * @TODO: Call searchVisitor method by passing request object as null and 
 		 * asserting the model view name
 		 */	
+		
+		request = new MockHttpServletRequest("GET", "/searchVisitor.htm");
+		try {
+			modelAndView = controller.searchVisitor(null, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals(null, modelAndView.getViewName());
 	}
 
 	/**
@@ -131,7 +172,9 @@ public class TestVisitorController {
 		 * Set visitor object in VISITOR session by calling searchUser method from visitorDAO		 
 		 * Set request parameters for USERNAME and PASSWORD for valid values
 		 * Call registerVisitor method and assert model view name 
-		 */		
+		 */	
+		
+
 	}	
 
 	/**
