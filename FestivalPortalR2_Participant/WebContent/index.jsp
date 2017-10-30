@@ -1,3 +1,4 @@
+<%@page import="jdk.nashorn.internal.ir.RuntimeNode.Request"%>
 <%@page import="org.apache.catalina.Session"%>
 <%@ include file="/include.jsp"%>
 <%@page import="java.util.ResourceBundle"%>
@@ -33,6 +34,13 @@ alert("Please provide Password");
 return false;
 }
 }
+
+function selectlanguage()
+{
+	
+
+}
+
 </script>
 </head>
 <style>
@@ -47,18 +55,28 @@ return false;
 <br/><br/><br/><br/><br/><br/>
 <%
 	HttpSession session=request.getSession(true);
-	session.invalidate();
 	ResourceBundle res= null;
+	String ln = request.getParameter("ln");
 	try
 	{
 	res = ResourceBundle.getBundle("Login");
+	if(ln.equals("hindi"))
+	{
 	Locale.setDefault(new Locale("hi","IN"));
+	}
+	else
+	{
+	Locale.setDefault(new Locale("en","US"));
+
+	}
+	
 	}
 	catch(Exception e)
 	{
 		e.getMessage();
 	}
-	
+	session.invalidate();
+
 %>
 <form method="post" name="logForm" action="searchVisitor.htm" onsubmit="return validateForm()">
 <table width="80%" align="center" border="2" bordercolor="#339999">
@@ -106,6 +124,12 @@ return false;
 				<div id="content"><a href="registration.jsp">Register
 				here</a></div>
 				</td>
+			</tr>
+			<tr>
+			<td><a href="<jstlcore:url value="/index.jsp?ln=hindi"/>">Hindi</a></td>
+			<td><a href="<jstlcore:url value="/index.jsp?ln=english"/>">English</a></td>
+
+			
 			</tr>
 		</table>
 		<br />
