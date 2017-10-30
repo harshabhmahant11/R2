@@ -1,10 +1,13 @@
 <%@page import="org.apache.catalina.Session"%>
 <%@ include file="/include.jsp"%>
-
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.util.Locale;"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 <head>
 <title>Welcome to Festival Event Registration System</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="StyleSheet" href="css/struts2.css" type="text/css" />
 <script language="JavaScript">
 <!--
@@ -45,13 +48,24 @@ return false;
 <%
 	HttpSession session=request.getSession(true);
 	session.invalidate();
+	ResourceBundle res= null;
+	try
+	{
+	res = ResourceBundle.getBundle("Login");
+	Locale.setDefault(new Locale("hi","IN"));
+	}
+	catch(Exception e)
+	{
+		e.getMessage();
+	}
+	
 %>
 <form method="post" name="logForm" action="searchVisitor.htm" onsubmit="return validateForm()">
 <table width="80%" align="center" border="2" bordercolor="#339999">
 	<tr>
 		<td align="Center">
 		<div id="header">&nbsp;
-		<div align="center">Festival Event Registration System</div>
+		<div align="center"><%=res.getString("heading1") %></div>
 		</div>
 		<!-- header end -->
 		<br/>
@@ -60,7 +74,7 @@ return false;
 				<!--content begin -->
 				<td colspan="2" align="center">
 				<div id="content">
-				<h3>Portal Login Page</h3>
+				<h3><%=res.getString("heading2")%></h3>
 				</div>
 				</td>
 			</tr>
@@ -74,7 +88,7 @@ return false;
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right"><input type='submit' value=" Login "></input> <br />
+				<td colspan="2" align="right"><input type='submit' value=<%=res.getString("login") %>></input> <br />
 				</td>
 			</tr>
 			<tr>
