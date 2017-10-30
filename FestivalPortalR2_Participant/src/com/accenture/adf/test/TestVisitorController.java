@@ -2,6 +2,8 @@ package com.accenture.adf.test;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -173,9 +175,28 @@ public class TestVisitorController {
 		 * Set request parameters for USERNAME and PASSWORD for valid values
 		 * Call registerVisitor method and assert model view name 
 		 */	
-		
+		request = new MockHttpServletRequest("GET", "/eventreg.htm");
+		try {
+			session.setAttribute("VISITOR", visitorDao.searchUser("ylee", "password"));
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		request.setParameter("USERNAME", "ylee");
+		request.setParameter("PASSWORD", "password");
+		try {
+			modelAndView = controller.registerVisitor(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		assertEquals("/visitormain.jsp", modelAndView.getViewName());
+	}
 
-	}	
+	
 
 	/**
 	 * Negative test case for method registerVisitor
@@ -186,6 +207,14 @@ public class TestVisitorController {
 		 * @TODO: Call registerVisitor method by passing request object as null and 
 		 * asserting the model view name
 		 */	
+		request = new MockHttpServletRequest("GET", "/eventreg.htm");
+		try {
+			modelAndView = controller.registerVisitor(null, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals("/visitormain.jsp", modelAndView.getViewName());
 	}
 
 	/**
@@ -199,6 +228,25 @@ public class TestVisitorController {
 		 * Set request parameters for all valid user values
 		 * Call updateVisitor method and assert model view name 
 		 */	
+		request = new MockHttpServletRequest("GET", "/updatevisitor.htm");
+		try {
+			session.setAttribute("VISITOR", visitorDao.searchUser("ylee", "password"));
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		request.setParameter("USERNAME", "ylee");
+		request.setParameter("PASSWORD", "password");
+		try {
+			modelAndView = controller.updateVisitor(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals("/updatevisitor.jsp", modelAndView.getViewName());
 	}
 
 	/**
@@ -210,6 +258,13 @@ public class TestVisitorController {
 		 * @TODO: Call updateVisitor method by passing request object as null and 
 		 * asserting the model view name
 		 */	
+		try {
+			modelAndView = controller.updateVisitor(null, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals(null, modelAndView.getViewName());
 	}
 
 	/**
@@ -223,6 +278,26 @@ public class TestVisitorController {
 		 * Set request parameters for all USERNAME, PASSWORD and eventId values
 		 * Call unregisterEvent method and assert model view name 
 		 */	
+		request = new MockHttpServletRequest("GET", "/eventunreg.htm");
+		try {
+			session.setAttribute("VISITOR", visitorDao.searchUser("ylee", "password"));
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		request.setParameter("USERNAME", "ylee");
+		request.setParameter("PASSWORD", "password");
+		request.setParameter("eventId", "1001");
+		try {
+			modelAndView = controller.unregisterEvent(request, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals("/visitormain.jsp", modelAndView.getViewName());
 	}
 
 	/**
@@ -234,6 +309,14 @@ public class TestVisitorController {
 		 * @TODO: Call unregisterEvent method by passing request object as null and 
 		 * asserting the model view name
 		 */	
+		request = new MockHttpServletRequest("GET", "/eventunreg.htm");
+		try {
+			modelAndView = controller.unregisterEvent(null, response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			fail("Exception");
+		}
+		assertEquals(null, modelAndView.getViewName());
 	}
 
 	/**
@@ -247,6 +330,27 @@ public class TestVisitorController {
 		 * Set request parameters for eventname
 		 * Call searchEventsByName method and assert model view name 
 		 */		
+		request = new MockHttpServletRequest("GET", "/searchEventByName.htm");
+		try {
+			session.setAttribute("VISITOR", visitorDao.searchUser("jjones", "password"));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		request.setParameter("USERNAME", "jjones");
+		request.setParameter("PASSWORD", "password");
+		request.setParameter("eventname", "Rose Parade");
+		try {
+			modelAndView = controller.searchEventsByName(request,response);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertEquals("/visitormain.jsp", modelAndView.getViewName());
+		
 	}
 
 	/**
