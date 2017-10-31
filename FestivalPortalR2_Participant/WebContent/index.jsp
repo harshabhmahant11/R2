@@ -54,28 +54,29 @@ function selectlanguage()
 <body>
 <br/><br/><br/><br/><br/><br/>
 <%
-	HttpSession session=request.getSession(true);
-	ResourceBundle res= null;
-	String ln = request.getParameter("ln");
-	try
-	{
-	res = ResourceBundle.getBundle("Login");
-	if(ln.equals("hindi"))
-	{
-	Locale.setDefault(new Locale("hi","IN"));
-	}
-	else
-	{
-	Locale.setDefault(new Locale("en","US"));
+HttpSession session=request.getSession(true);
+session.invalidate();
+ResourceBundle res= null;
+String ln = request.getParameter("ln");
+System.out.println(ln);
 
-	}
-	
-	}
-	catch(Exception e)
-	{
-		e.getMessage();
-	}
-	session.invalidate();
+res = ResourceBundle.getBundle("Login");
+if(ln!=null)
+if(ln.equals("hindi") )
+{
+Locale.setDefault(new Locale("hi","IN"));
+ln=null;
+RequestDispatcher rd=application.getRequestDispatcher("/index.jsp?ln=null");
+rd.forward(request,response);
+
+}
+else if(ln.equals("english"))
+{
+Locale.setDefault(new Locale("en","US"));
+ln=null;
+RequestDispatcher rd=application.getRequestDispatcher("/index.jsp?ln=null");
+rd.forward(request,response);
+}
 
 %>
 <form method="post" name="logForm" action="searchVisitor.htm" onsubmit="return validateForm()">
@@ -97,16 +98,16 @@ function selectlanguage()
 				</td>
 			</tr>
 			<tr>
-				<td>Visitor Name</td>
+				<td><%=res.getString("name")%></td>
 				<td><input type="text" name="USERNAME"></td>
 			</tr>
 			<tr>
-				<td>Password</td>
+				<td><%=res.getString("password")%></td>
 				<td><input type="password" name="PASSWORD">
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="right"><input type='submit' value=<%=res.getString("login") %>></input> <br />
+				<td colspan="2" align="right"><input type='submit' value="<%=res.getString("login") %>"></input> <br />
 				</td>
 			</tr>
 			<tr>
@@ -120,13 +121,12 @@ function selectlanguage()
 			</tr>
 			<tr>
 				<td>
-				<div id="content">New Visitor:</div>
-				<div id="content"><a href="registration.jsp">Register
-				here</a></div>
+				<div id="content"><%=res.getString("new_visitor")%>:</div>
+				<div id="content"><a href="registration.jsp"><%=res.getString("register_now")%></a></div>
 				</td>
 			</tr>
 			<tr>
-			<td><a href="<jstlcore:url value="/index.jsp?ln=hindi"/>">Hindi</a></td>
+			<td><a href="<jstlcore:url value="/index.jsp?ln=hindi"/>"><%=res.getString("hindi")%></a></td>
 			<td><a href="<jstlcore:url value="/index.jsp?ln=english"/>">English</a></td>
 
 			

@@ -1,3 +1,5 @@
+<%@page import="java.util.ResourceBundle"%>
+<%@page import="java.util.Locale;"%>
 <%@ include file="/include.jsp"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
@@ -105,13 +107,20 @@ function isNumeric(value) {
 </head>
 
 <body>
+<%
+ResourceBundle res=ResourceBundle.getBundle("Login");
+
+
+
+%>
+
 	<br/><br/>
 	<form action="newVistor.htm" name="regform" method="post" onsubmit="return validateForm()">
 	<table width="80%" align="center"  border="2">
 		<tbody><tr>
 			<td>
 			<div id="header">&nbsp;
-			<div align="center">Festival Registration System</div>
+			<div align="center"><%=res.getString("heading1") %></div>
 			</div>
 			
 			<table>
@@ -121,7 +130,7 @@ function isNumeric(value) {
 						<tbody><tr>
 							<td width="90">
 							<div id="menu" align="center"><a href="<jstlcore:url value="/index.jsp"/>">
-							Login_Page </a></div>
+							<%=res.getString("login_page") %> </a></div>
 							</td>							
 						</tr>
 					</tbody></table>
@@ -135,57 +144,57 @@ function isNumeric(value) {
 						
 						<tbody><tr>
 							<td align="center" colspan="2">
-							<h3>New Visitor Registration Page</h3>
+							<h3><%=res.getString("new_user_page") %></h3>
 							</td>
 						</tr>
-						<tr><td align="center" colspan="2" style="font-style: italic;">Fields marked (<span style="font-weight: bold;color: red; font-size: 15px;">*</span>) are Mandatory</td></tr>
+						<tr><td align="center" colspan="2" style="font-style: italic;"><!--  Fields marked (<span style="font-weight: bold;color: red; font-size: 15px;">*</span>) are Mandatory--><%=res.getString("mandatory")%></td></tr>
 						<tr><td></td><td></td></tr>
 						<tr><td></td><td></td></tr>
 						<tr>
 						
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-							First Name:</td><td> 
+							<%=res.getString("first_name") %>:</td><td> 
 							   <input type="text" name="FIRSTNAME" size="25"></input></td> 
 							
 					   </tr>
 					   <tr>			
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-							Last Name: </td><td><input type="text" name="LASTNAME" size="25"></input></td>
+							<%=res.getString("last_name") %>: </td><td><input type="text" name="LASTNAME" size="25"></input></td>
 							
 					   </tr>
 					   <tr>
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-							User Name:</td><td><input type="text" name="USERNAME" size="25"></input></td> 
+							<%=res.getString("username") %>:</td><td><input type="text" name="USERNAME" size="25"></input></td> 
 							
 					   </tr>
 					   <tr>
 						    <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    Password:</td><td><input type="password" name="PASSWORD" size="27"></input></td>
+						    <%=res.getString("password") %>:</td><td><input type="password" name="PASSWORD" size="27"></input></td>
 						   
 					   </tr>
 					   <tr>
 						    <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    Confirm Password:</td><td><input type="password" name="CPASSWORD" size="27"></input></td>
+						    <%=res.getString("confirm_password") %>:</td><td><input type="password" name="CPASSWORD" size="27"></input></td>
 						   
 					   </tr>
 					   <tr>
 						   <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    Email: </td><td> <input type="text" name="EMAIL" size="25"></input></td> 
+						    <%=res.getString("email") %>: </td><td> <input type="text" name="EMAIL" size="25"></input></td> 
 						    
 					   </tr>
 					   <tr>
                            <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-                           Phone Number:</td><td><input type="text" name="PHONENO" size="25"></input></td>
+                           <%=res.getString("phone_number") %>:</td><td><input type="text" name="PHONENO" size="25"></input></td>
                            
 					   </tr>
 					   <tr>
-						   <td> Address:</td><td> <input type="text" name="ADDRESS" size="25"></input> </td>
+						   <td> <%=res.getString("address") %>:</td><td> <input type="text" name="ADDRESS" size="25"></input> </td>
 						   
 						</tr>
 						<tr>	
 						   <td colspan="2" align="right">										
-						    <input value="Register" type="submit">
-						    <input value="Clear" type="reset" ></td>
+						    <input value="<%=res.getString("register") %>" type="submit">
+						    <input value="<%=res.getString("clear") %>" type="reset" ></td>
 						</tr>
 						<tr>
 						
