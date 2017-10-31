@@ -228,7 +228,8 @@ public class EventDAO {
 		connection = FERSDataConnection.createConnection();
 		String sql = query.getSearchByEventName();
 		statement = connection.prepareStatement(sql);
-		statement.setString(1, eventname);
+		String ename = "%"+eventname+"%";
+		statement.setString(1, ename);
 		
 		resultSet = statement.executeQuery();
 
