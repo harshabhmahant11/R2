@@ -296,7 +296,7 @@ public class TestVisitorController {
 		request.setParameter("USERNAME", "bsmith");
 		request.setParameter("PASSWORD", "password");
 		request.setParameter("eventId", "1001");
-		request.setParameter("sessionId", "10001");
+		request.setParameter("eventsessionid", "10001");
 	
 		
 		try {
