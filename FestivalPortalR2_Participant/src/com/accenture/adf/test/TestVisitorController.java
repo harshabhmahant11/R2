@@ -53,6 +53,11 @@ public class TestVisitorController {
 		/**
 		 * @TODO: Release all the objects here by assigning them null  
 		 */
+		modelAndView = null;
+		controller = null;
+		session = null;
+		response = null;
+		visitorDao = null;
 	}
 
 	/**
