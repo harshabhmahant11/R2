@@ -1,5 +1,5 @@
 <%@page import="java.util.ResourceBundle"%>
-<%@page import="java.util.Locale;"%>
+<%@page import="java.util.Locale"%>
 <%@ include file="/include.jsp"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 
