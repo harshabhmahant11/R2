@@ -154,41 +154,41 @@ ResourceBundle res=ResourceBundle.getBundle("Login");
 						
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
 							<%=res.getString("first_name") %>:</td><td> 
-							   <input type="text" name="FIRSTNAME" size="25"></input></td> 
+							   <input type="text" name="FIRSTNAME" size="25" maxlength="40"></input></td> 
 							
 					   </tr>
 					   <tr>			
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-							<%=res.getString("last_name") %>: </td><td><input type="text" name="LASTNAME" size="25"></input></td>
+							<%=res.getString("last_name") %>: </td><td><input type="text" name="LASTNAME" size="25" maxlength="40"></input></td>
 							
 					   </tr>
 					   <tr>
 							<td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-							<%=res.getString("username") %>:</td><td><input type="text" name="USERNAME" size="25"></input></td> 
+							<%=res.getString("username") %>:</td><td><input type="text" name="USERNAME" size="25" maxlength="40"></input></td> 
 							
 					   </tr>
 					   <tr>
 						    <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    <%=res.getString("password") %>:</td><td><input type="password" name="PASSWORD" size="27"></input></td>
+						    <%=res.getString("password") %>:</td><td><input type="password" name="PASSWORD" size="27" maxlength="40"></input></td>
 						   
 					   </tr>
 					   <tr>
 						    <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    <%=res.getString("confirm_password") %>:</td><td><input type="password" name="CPASSWORD" size="27"></input></td>
+						    <%=res.getString("confirm_password") %>:</td><td><input type="password" name="CPASSWORD" size="27" maxlength="40"></input></td>
 						   
 					   </tr>
 					   <tr>
 						   <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-						    <%=res.getString("email") %>: </td><td> <input type="text" name="EMAIL" size="25"></input></td> 
+						    <%=res.getString("email") %>: </td><td> <input type="text" name="EMAIL" size="25" maxlength="50"></input></td> 
 						    
 					   </tr>
 					   <tr>
                            <td><span style="font-weight: bold;color: red;font-size: 15px;">*</span>
-                           <%=res.getString("phone_number") %>:</td><td><input type="text" name="PHONENO" size="25"></input></td>
+                           <%=res.getString("phone_number") %>:</td><td><input type="text" name="PHONENO" size="25" maxlength="15"></input></td>
                            
 					   </tr>
 					   <tr>
-						   <td> <%=res.getString("address") %>:</td><td> <input type="text" name="ADDRESS" size="25"></input> </td>
+						   <td> <%=res.getString("address") %>:</td><td> <input type="text" name="ADDRESS" size="25" maxlength="30"></input> </td>
 						   
 						</tr>
 						<tr>	

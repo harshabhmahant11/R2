@@ -2,7 +2,7 @@
 <%@page import="org.apache.catalina.Session"%>
 <%@ include file="/include.jsp"%>
 <%@page import="java.util.ResourceBundle"%>
-<%@page import="java.util.Locale;"%>
+<%@page import="java.util.Locale"%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
