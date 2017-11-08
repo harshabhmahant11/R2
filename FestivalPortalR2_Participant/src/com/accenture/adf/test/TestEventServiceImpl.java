@@ -163,6 +163,11 @@ public class TestEventServiceImpl {
 		/**
 		 * @TODO: Call getAllEventCoordinators and assert the size of return type of this method
 		 */		
+		
+		   boolean flag=false;
+		    if(eventServiceImpl.getAllEventCoordinators().size()>0)
+		     flag=true;
+		    assertEquals(true, flag);
 	}
 
 	/**
@@ -174,8 +179,16 @@ public class TestEventServiceImpl {
 		 * @TODO: Call getEvent and assert the event id of this event with 
 		 * passed event id 
 		 */		
-	}
+		boolean flag = false;
+		   Event event = new Event();
+		   //event.setEventid(1005);
+		   event = eventServiceImpl.getEvent(1005, 10005);
+		   if(event.getEventid()==1005)
+		    flag = true;
+		   assertEquals(true, flag);
 
+	}
+	
 	/**
 	 * Junit test case for updateEvent
 	 */
@@ -186,6 +199,23 @@ public class TestEventServiceImpl {
 		 * Create event object by setting appropriate values
 		 * Assert the status of insertEvent method
 		 */		
+		 int status = 0;
+		   boolean flag = false;
+		   Event event = new Event();
+//		   event.setEventid(1050);
+//		   event.setSessionId(10050);
+		   event.setName("Meditation");
+		   event.setDescription("option");
+		   event.setPlace("Accenture");
+		   event.setDuration("1300-1400");
+		   event.setEventtype("Nature");
+		   event.setEventSession(1);
+		   event.setEventCoordinatorId(105);
+		   event.setSeatsavailable(200);
+		   status=eventServiceImpl.insertEvent(event);
+		   if(status>0)
+		    flag = true;
+		   assertEquals(true, flag);
 	}
 
 	/**
@@ -199,6 +229,20 @@ public class TestEventServiceImpl {
 		 * Call updateEvent method
 		 * Assert the status of updateEvent method
 		 */	
+		
+		int status = 0;
+		   boolean flag = false;
+		   Event event = new Event();
+		   event.setSessionId(10003);
+		   event.setEventid(1004);
+		   event.setSeatsavailable(5000);
+		   event.setDescription("describe");
+		   event.setDescription("describe");
+		   
+		   status = eventServiceImpl.updateEvent(event);
+		   if(status>0)
+		    flag = true;
+		   assertEquals(true, flag);
 	}
 
 	/**
@@ -212,6 +256,14 @@ public class TestEventServiceImpl {
 		 * Call deleteEvent method
 		 * Assert the status of deleteEvent method
 		 */	
+		
+		 int status = 0;
+		   boolean flag = false;
+//		   Event event = new Event();
+		   status = eventServiceImpl.deleteEvent(1003,10003);
+		   if(status>0)
+		    flag = true;
+		   assertEquals(true, flag);
 	}
 
 }

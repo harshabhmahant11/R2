@@ -190,6 +190,7 @@ public class EventServiceImpl implements EventFacade {
 		int status = 1;
 		try {
 			status = dao.insertEvent(event);
+			
 		} catch (ClassNotFoundException exception) {			
 			log.info("Exception is :" + exception.getMessage());
 			return 0;

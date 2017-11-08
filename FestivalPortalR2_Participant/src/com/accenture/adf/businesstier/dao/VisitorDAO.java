@@ -177,6 +177,7 @@ public class VisitorDAO {
 		statement.setInt(3,eventid);
 		resultSet= statement.executeQuery();
 		resultSet.next();
+		
 		//System.out.println(resultSet.getInt(1));
 		if(resultSet.getInt(1)<=0)
 		{
