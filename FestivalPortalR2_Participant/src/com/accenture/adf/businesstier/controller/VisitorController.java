@@ -410,7 +410,7 @@ public class VisitorController {
 		mv.addObject("visitor", visitor);
 		mv.addObject("allEvents", eventList);
 		mv.addObject("regEvents", regList);
-		mv.setViewName("/visitormain.jsp");
+		mv.setViewName("redirect:searchVisitor.htm");
 		return mv;
 	}
 
